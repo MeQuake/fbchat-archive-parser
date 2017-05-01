@@ -8,6 +8,7 @@ from datetime import datetime, tzinfo, time, timedelta as dt_timedelta
 import pytz
 from pytz.exceptions import NonExistentTimeError, AmbiguousTimeError
 from pytz import timezone as pytz_timezone
+import dateparser
 
 _MIN_VALID_TIMEZONE_OFFSET = dt_timedelta(hours=-12)
 _MAX_VALID_TIMEZONE_OFFSET = dt_timedelta(hours=14)
@@ -160,8 +161,13 @@ def parse_timestamp(raw_timestamp, use_utc, hints):
             pass
 
     if timestamp is None:
+        timestamp = dateparser.parse(timestamp_string)
+    else:
+        timestamp = timestamp.datetime
+
+    if timestamp is None:
         raise UnexpectedTimeFormatError(raw_timestamp)
-    timestamp = timestamp.datetime
+
     if use_utc:
         timestamp -= delta
         return timestamp.replace(tzinfo=pytz.utc)

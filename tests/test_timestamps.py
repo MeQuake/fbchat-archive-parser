@@ -81,7 +81,7 @@ class TestTimestamps(unittest.TestCase):
         self.run_timestamp_test(timestamp_raw)
 
     def test_polish(self):
-        timestamp_raw = "18 listopada 2016 o 22:20 UTC+01"
+        timestamp_raw = "4 grudnia 2016 o 13:54 UTC-07"
         self.run_timestamp_test(timestamp_raw)
 
     def test_bad_timestamp(self):
